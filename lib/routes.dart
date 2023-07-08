@@ -10,7 +10,10 @@ Route onGenerateRoute(RouteSettings settings) {
     case HomePage.routeName:
       return MaterialPageRoute(builder: (context) => HomePage());
     case AddContact.routeName:
-      return MaterialPageRoute(builder: (context) => AddContact());
+      return MaterialPageRoute(
+          builder: (context) => AddContact(
+                index: settings.arguments as int,
+              ));
     case ContactDetail.routeName:
       return MaterialPageRoute(
           builder: (context) => ContactDetail(settings.arguments as int));

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:groupb/screens/addContact.dart';
 import '../models/contact.dart';
 import '../data.dart';
 
@@ -17,6 +18,12 @@ class ContactDetail extends StatelessWidget {
           Text(contacts[index].name),
           Text(contacts[index].phoneNumber),
           Text(contacts[index].email),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AddContact.routeName,
+                    arguments: index);
+              },
+              child: Text('Edit')),
         ],
       ),
     );

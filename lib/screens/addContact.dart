@@ -8,12 +8,15 @@ import 'package:groupb/screens/homeScreen.dart';
 
 class AddContact extends StatelessWidget {
   static const String routeName = '/addContact';
-  AddContact({super.key});
+  final int index;
+  AddContact({required this.index, super.key});
 
   GlobalKey<FormState> _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    Contact newContact = Contact(name: 'name', phoneNumber: 'phoneNumber');
+    Contact newContact = index == -1
+        ? Contact(name: '', phoneNumber: '', email: '')
+        : contacts[index];
 
     return Scaffold(
       body: Form(
@@ -21,6 +24,7 @@ class AddContact extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
+              initialValue: newContact.name,
               maxLength: 15,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp('[a-z A-Z]'))
@@ -44,6 +48,7 @@ class AddContact extends StatelessWidget {
               height: 20,
             ),
             TextFormField(
+              initialValue: newContact.phoneNumber,
               maxLength: 13,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp('[0-9]'))
@@ -66,6 +71,7 @@ class AddContact extends StatelessWidget {
               height: 20,
             ),
             TextFormField(
+              initialValue: newContact.email,
               maxLength: 20,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp('[a-z 0-9]'))
@@ -98,7 +104,11 @@ class AddContact extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     if (_key.currentState!.validate()) {
-                      contacts.add(newContact);
+                      if (index == -1) {
+                        contacts.add(newContact);
+                      } else {
+                        contacts[index] = newContact;
+                      }
                       Navigator.pushNamedAndRemoveUntil(
                           context, HomePage.routeName, (route) => false);
                     }

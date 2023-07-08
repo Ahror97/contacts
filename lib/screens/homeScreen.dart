@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, AddContact.routeName);
+                Navigator.pushNamed(context, AddContact.routeName, arguments: -1);
               },
               icon: Icon(Icons.add))
         ],
