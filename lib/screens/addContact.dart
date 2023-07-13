@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:groupb/data.dart';
 import 'package:groupb/models/contact.dart';
 import 'package:groupb/screens/homeScreen.dart';
+import '../services/prefs.dart';
 
 class AddContact extends StatelessWidget {
   static const String routeName = '/addContact';
@@ -14,9 +14,7 @@ class AddContact extends StatelessWidget {
   GlobalKey<FormState> _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    Contact newContact = index == -1
-        ? Contact(name: '', phoneNumber: '', email: '')
-        : contacts[index];
+    Contact newContact = Contact(name: '', phoneNumber: '', email: '');
 
     return Scaffold(
       body: Form(
@@ -102,12 +100,12 @@ class AddContact extends StatelessWidget {
                   child: Text('Cancel'),
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_key.currentState!.validate()) {
                       if (index == -1) {
-                        contacts.add(newContact);
+                        await addContact(newContact);
                       } else {
-                        contacts[index] = newContact;
+                        //contacts[index] = newContact;
                       }
                       Navigator.pushNamedAndRemoveUntil(
                           context, HomePage.routeName, (route) => false);
