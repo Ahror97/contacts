@@ -8,13 +8,16 @@ import '../services/prefs.dart';
 
 class AddContact extends StatelessWidget {
   static const String routeName = '/addContact';
-  final int index;
-  AddContact({required this.index, super.key});
+  Contact? contact;
+  //final int index;
+  // AddContact({required this.index, this.contact, super.key});
+  AddContact({this.contact, super.key});
 
   GlobalKey<FormState> _key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    Contact newContact = Contact(name: '', phoneNumber: '', email: '');
+    Contact newContact =
+        contact ?? Contact(id: -1, name: '', phoneNumber: '', email: '');
 
     return Scaffold(
       body: Form(
@@ -102,11 +105,7 @@ class AddContact extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () async {
                     if (_key.currentState!.validate()) {
-                      if (index == -1) {
-                        await addContact(newContact);
-                      } else {
-                        //contacts[index] = newContact;
-                      }
+                      await addContact(newContact);
                       Navigator.pushNamedAndRemoveUntil(
                           context, HomePage.routeName, (route) => false);
                     }

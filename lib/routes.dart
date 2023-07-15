@@ -12,11 +12,17 @@ Route onGenerateRoute(RouteSettings settings) {
     case AddContact.routeName:
       return MaterialPageRoute(
           builder: (context) => AddContact(
-                index: settings.arguments as int,
+                contact: settings.arguments as Contact?,
+                //index: (settings.arguments as Map)['index'],
+                //contact: (settings.arguments as Map)['contact'],
               ));
     case ContactDetail.routeName:
       return MaterialPageRoute(
-          builder: (context) => ContactDetail(settings.arguments as int));
+          builder: (context) => ContactDetail(settings.arguments as Contact
+
+              // (settings.arguments as Map)['contact'],
+              // (settings.arguments as Map)['index'])
+              ));
     // case SecondPage.routeName:
     //   return MaterialPageRoute(
     //       builder: (context) => SecondPage(settings.arguments as int));

@@ -5,10 +5,15 @@ import 'package:groupb/screens/contactDetail.dart';
 import 'package:groupb/services/prefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const String routeName = '/';
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,8 +22,12 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, AddContact.routeName,
-                    arguments: -1);
+                Navigator.pushNamed(
+                  context, AddContact.routeName,
+                  // arguments: {
+                  //   'index': -1,
+                  // }
+                );
               },
               icon: Icon(Icons.add))
         ],
@@ -38,6 +47,19 @@ class HomePage extends StatelessWidget {
               itemCount: contacts.length,
               itemBuilder: (context, index) {
                 return ListTile(
+                  onTap: () {
+                    Navigator.pushNamed(context, ContactDetail.routeName,
+                            arguments: contacts[index]
+                            //  {
+                            //   'contact': contacts[index],
+                            //   'index': index,
+                            // }
+                            )
+                        .then((value) {
+                      print(value);
+                      setState(() {});
+                    });
+                  },
                   leading: Text((index + 1).toString()),
                   title: Text(contacts[index].name),
                 );
